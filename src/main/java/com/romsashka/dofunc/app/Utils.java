@@ -3,32 +3,22 @@ package com.romsashka.dofunc.app;
 import java.util.*;
 
 public class Utils {
-    private static List<SimpleResolver> variations = new ArrayList<>();
+    private Map<String, SimpleResolver> variations = new HashMap<>();
 
-    public static String doFunc(String name, String text) {
+    public String doFunc(String name, String text) {
         SimpleResolver wrongOne = new WrongFunctionReturner();
         if (name == null || name.isEmpty()) return wrongOne.doSomething(text);
-        addVariations();
-
-        int i;
-
-        try {
-            i = Integer.parseInt(name) - 1;
-        } catch (NumberFormatException e) {
-            return wrongOne.doSomething(text);
-        }
-
-        return variations.get(i).doSomething(text);
+        return variations.get(name).doSomething(text);
     }
 
-    static class CapitalizationUtil implements SimpleResolver {
+    class CapitalizationUtil implements SimpleResolver {
         @Override
         public String doSomething(String text) {
             return text.toUpperCase();
         }
     }
 
-    static class FistWordReturner implements SimpleResolver {
+    class FistWordReturner implements SimpleResolver {
         @Override
         public String doSomething(String text) {
             final String[] words = text.split(" ");
@@ -39,7 +29,7 @@ public class Utils {
         }
     }
 
-    static class WrongFunctionReturner implements SimpleResolver {
+    class WrongFunctionReturner implements SimpleResolver {
 
         @Override
         public String doSomething(String text) {
@@ -47,19 +37,9 @@ public class Utils {
         }
     }
 
-    private static void addVariations() {
-        variations.add(new CapitalizationUtil());
-        variations.add(new FistWordReturner());
-        variations.add(new WrongFunctionReturner());
-    }
-
-
-    private static String getFirst(String text) {
-        if (text == null || text.isEmpty()) return "";
-        return text.split(" ")[0];
-    }
-
-    private static String exit() {
-        return "Function is  undefined";
+    public Utils() {
+        variations.put("1", new CapitalizationUtil());
+        variations.put("2", new FistWordReturner());
+        variations.put("3", new WrongFunctionReturner());
     }
 }

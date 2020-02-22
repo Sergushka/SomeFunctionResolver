@@ -1,18 +1,17 @@
 package com.romsashka.dofunc;
 
+import com.romsashka.dofunc.app.Utils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import static com.romsashka.dofunc.app.Utils.doFunc;
 
 @SpringBootApplication
 public class DofuncApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(DofuncApplication.class, args);
-        System.out.println(doFunc("3", "Arnold is Cool"));
+        Utils utils = new Utils();
+        System.out.println(utils.doFunc("1", "Arnold is cool"));
     }
-
 
 
 }
