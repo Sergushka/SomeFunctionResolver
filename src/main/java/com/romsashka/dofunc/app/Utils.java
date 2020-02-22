@@ -6,9 +6,12 @@ public class Utils {
     private Map<String, SimpleResolver> variations = new HashMap<>();
 
     public String doFunc(String name, String text) {
-        SimpleResolver wrongOne = new WrongFunctionReturner();
-        if (name == null || name.isEmpty()) return wrongOne.doSomething(text);
-        return variations.get(name).doSomething(text);
+        SimpleResolver resolver = new WrongFunctionReturner();
+        if (name == null || name.isEmpty()) return resolver.doSomething(text);
+        if (variations.get(name) != null) {
+            resolver = variations.get(name);
+        }
+        return resolver.doSomething(text);
     }
 
     class CapitalizationUtil implements SimpleResolver {
