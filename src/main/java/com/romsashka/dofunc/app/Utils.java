@@ -6,9 +6,18 @@ public class Utils {
     private static List<SimpleResolver> variations = new ArrayList<>();
 
     public static String doFunc(String name, String text) {
-        if (name == null || name.isEmpty()) return new WrongFunctionReturner().doSomething(text);
+        SimpleResolver wrongOne = new WrongFunctionReturner();
+        if (name == null || name.isEmpty()) return wrongOne.doSomething(text);
         addVariations();
-        int i = Integer.parseInt(name) - 1;
+
+        int i;
+
+        try {
+            i = Integer.parseInt(name) - 1;
+        } catch (NumberFormatException e) {
+            return wrongOne.doSomething(text);
+        }
+
         return variations.get(i).doSomething(text);
     }
 
