@@ -1,5 +1,13 @@
 package com.romsashka.dofunc.app;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 public interface SimpleResolver {
-    public String doSomething(String text);
+    String doSomething(String text);
+    String getName();
+
+    @Autowired
+    default void regName(Utils utils) {
+        utils.registration(getName(), this);
+    }
 }
